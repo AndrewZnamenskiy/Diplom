@@ -28,8 +28,7 @@
  - vm-proxy1 (ubuntu-2204-lts)
  - vm-proxy2 (ubuntu-2204-lts)
 
-### Также развернут Application Load Balancer для распределения HTTP-запросов между
-### Web-серверами vm-proxy1/vm-proxy2.
+   Также развернут Application Load Balancer для распределения HTTP-запросов между Web-серверами vm-proxy1/vm-proxy2.
 
    Виртуальные машины развёрнуты на YandexCloud с помощью Terraform сценария, на этапе 
 установки на машины устанавливается ssh pulic key для дальнейшего доступа по ssh ключу.
@@ -37,8 +36,8 @@
 а также группы безопасности для ограничения доступа извне. Также сценарий включает 
 регулярное бекапирование по расписанию (snapshot disk) согласно заданию.
 
-*private key для доступа ssh на vm-ansible приложен в перечне файлов GitHub (директория privatekey).*
-*Для доступа на vm-ansible по ssh используется пользователь andy.*
+* private key для доступа ssh на vm-ansible приложен в перечне файлов GitHub (директория privatekey).
+* Для доступа на vm-ansible по ssh используется пользователь andy.
 
 ### Виртуальные машины имеют следующий состав и назначение:
 
@@ -78,23 +77,26 @@
     - файл playbook: ansible_roles_elk.yml
     - файл playbook: ansible_roles_zabbix.yml
     - роли:
-	docker_install
-	elastic_kibana_install
-	fb_install
-	nginx
-	zabbix-agent
-	zabbix_srv_install
+	* docker_install
+	* elastic_kibana_install
+	* fb_install
+	* nginx
+	* zabbix-agent
+	* zabbix_srv_install
 
  
- 5. Запускаем playbook по очерёдности: 
+ 5. Запускаем playbook поочерёдности: 
 
     1) Устанавливаем nginx, docker/Compose,filebeat,zabbix agent и соответсвуюшие конфигурации
+
          ` ansible-playbook ansible_roles_proxy.yml -i inventory `
 
     2) Устанавливаем elasticsearch,kibana,docker/Compose и соответсвуюшие конфигурации
+
          ` ansible-playbook ansible_roles_elk.yml -i inventory `
  
     3) Устанавливаем zabbix server,docker и соответсвуюшие конфигурации
+
          ` ansible-playbook ansible_roles_zabbix.yml -i inventory ` 
 
  6. Настраиваем через Web-интерфейс index (filebeat-*) для поиска событий от filebeat в Kibana
