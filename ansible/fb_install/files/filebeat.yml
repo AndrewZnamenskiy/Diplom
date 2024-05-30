@@ -1,0 +1,37 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    # Я запущу filebeat в докере и проброшу логи приложения по данному пути
+    paths:
+      #  - /host_metrics_app/host_metrics_app.log
+        - /var/nginx/log/*.log
+    # В fields мы можем указать дополнительные поля, а затем в logstash вытаскивать их
+    # и делать какую-нибудь дополнительную работу с логами
+    fields:
+      # Название нашего сервиса
+      service: product_nginx
+      organisation: netology
+
+output.elasticsearch:
+  # Array of hosts to connect to.
+  #hosts: ["elastic:9200"]
+  hosts: ["192.168.11.12:9200"]
+  protocol: "http"
+  username: "elastic"
+  password: "test"
+  indices:
+    - index: "warning-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.contains:
+        message: "WARN"
+    - index: "error-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.contains:
+        message: "ERR"
+    - index: "info-%{[agent.version]}-%{+yyyy.MM.dd}"
+      when.contains:
+        message: "INFO"
+    - index: "%{[fields.log_type]}-%{[agent.version]}-%{+yyyy.MM.dd}"
+
+setup.kibana:
+  host: "http://192.168.11.12:5601"
+  username: "elastic"
+  password: "test"

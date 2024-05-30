@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: andy
+    groups: sudo
+    shell: /bin/bash
+    lock_passwd: false
+    passwd: TGliZXJ0eSgyOCk=
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDdh0pnPlE8+Y2GNNoLLjXwBl/sVSAZ9iSV0ltcIN6Aam0of8EV3GWPunXQMDBKyBUZzyBUcjyoX063VMtiSO5IaZikTk2Ecp89k7GuRJsBfA18ZcUA6xU5Sbv173vgX6QvPZfTSf4snaTJEBL6uPQ07e9XyNweWDDjuClYurfbr7H6i6Nw4PjkCRyaW1QB0BmpAlLQWxGFcSYI++jBaHKXoJX1RdC/4u0Tc3fBcOFnjw8+xuLUDtQuUaTNLCVrKzKYteEkrkbVkLuvKPrcpUan3aDJY18Wi4PcmzkHtFislS2Thb8Y74VvxCYwmVSh8qR0heTw8TqGHjMpEDdMpFPPcb9pdLKMabaGTcu2CieqTlhZoLDzosMTUUi1fByt4qLkEawzN5fAF+mRcgOUjKcDqDYKWstOdMCI6/MBtJ+dCXwSk0BWQmOEG1gL8Nbs3uccN4hpZVVu323foySxZxHRHuhjkYhWEU1yMH2Gl7tVM8iHt3QkI6cFGOxgssVDZo8=
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILATd8Loe5tts1t2iFmwEwbG9M/syCgSfRHIKMuJfUpo 

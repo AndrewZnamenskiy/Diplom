@@ -1,0 +1,26 @@
+services:
+  filebeat:
+    user: root
+    container_name: filebeat
+    image: elastic/filebeat:7.17.20
+    volumes:
+      - /var/run/docker.sock:/host_docker/docker.sock
+      - /var/lib/docker:/host_docker/var/lib/docker
+     # - /media/filebeat/:/usr/share/filebeat/mylog
+      - /media/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /var/log/nginx/:/var/nginx/log:ro
+    command: ["--strict.perms=false"]
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    stdin_open: true
+    tty: true
+    network_mode: bridge
+    deploy:
+      mode: global
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "50"

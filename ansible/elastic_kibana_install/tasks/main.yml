@@ -1,0 +1,72 @@
+---
+# tasks file for elastic_kibana_install
+
+- name: wait until apt lock is released
+  shell: lsof -w /var/lib/apt/lists/lock | wc -l
+  register: lock
+  until: lock.stdout == "0"
+  retries: 10
+  delay: 10
+
+- name: wait until apt lock_frontend is released
+  shell: lsof -w /var/lib/dpkg/lock-frontend | wc -l
+  register: lock_frontend
+  until: lock_frontend.stdout == "0"
+  retries: 10
+  delay: 10
+
+
+- name: Create a directory if it does not exist
+  file:
+    path: "/media/{{ el_config_dir }}"
+    state: directory
+    mode: '0755'
+    owner: andy
+    group: docker
+    recurse: true
+
+- name: Create a directory if it does not exist
+  file:
+    path: "/media/{{ ki_config_dir }}"
+    state: directory
+    mode: '0755'
+    owner: andy
+    group: docker
+    recurse: true
+
+- name: copy Docker Compose file
+  copy:
+    src: "{{ elk_container }}.yml"
+    dest: /home/andy/docker-compose.yml
+    owner: andy
+    group: docker
+
+
+- name: copy kibana,elastic config files
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: "{{ el_config }}.yml"
+      dest: "/media/{{ el_config_dir }}/{{ el_config }}.yml"
+    - src: "{{ ki_config }}.yml"
+      dest: "/media/{{ ki_config_dir }}/{{ ki_config }}.yml"
+
+#- name: copy elastic config file
+#  copy:
+#    src: "{{ el_config }}.yml"
+#    dest: "/media/{{ el_config_dir }}/{{ el_config }}.yml"
+#    owner: andy
+#    group: docker
+
+#- name: copy kibana config file
+#  copy:
+#    src: "{{ ki_config }}.yml"
+#    dest: "/media/{{ ki_config_dir }}/{{ ki_config }}.yml"
+#    owner: andy
+#    group: docker
+
+- name: shell command on remote host
+  shell:
+    cmd: "docker-compose -f docker-compose.yml up -d"
+    chdir: /home/andy/

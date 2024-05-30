@@ -1,0 +1,67 @@
+---
+# tasks file for zabbix-agent
+
+#- name: Copy Zabbix Agent 6.2  package
+#  copy:
+#    src: zabbix-release_6.4-1+ubuntu22.04_all.deb
+#    dest: /tmp/zabbix-release_6.4-1+ubuntu22.04_all.deb
+#    owner: root
+#    group: root
+#    mode: '0644'
+
+
+#- name: add GPG key
+#  apt_key:
+#    url: https://repo.zabbix.com/RPM-GPG-KEY-ZABBIX-79EA5ED4
+#    state: present
+
+- name: Download Zabbix Agent repo package
+  ansible.builtin.get_url:
+    url: https://repo.zabbix.com/zabbix/6.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.4-1+ubuntu22.04_all.deb
+    dest: /tmp/zabbix-release_6.4-1+ubuntu22.04_all.deb
+    mode: '0640'
+
+- name: Install Zabbix Agent  repo
+  apt:
+    deb: /tmp/zabbix-release_6.4-1+ubuntu22.04_all.deb
+
+#- name: Update APT cache
+#  apt:
+#    update_cache: yes
+
+- name: Install Zabbix Agent
+  apt:
+    name: zabbix-agent
+    state: present
+    update_cache: yes
+
+
+- name: Add Zabbix Server
+  lineinfile:
+    path: /etc/zabbix/zabbix_agentd.conf
+    state: present
+    regexp: '^Server=127.0.0.1$'
+    line: "Server=192.168.11.11"
+
+#- name: Copy UserParameter script
+#  copy:
+#    src: req_counter.sh
+#    dest: /etc/zabbix/req_counter.sh
+#    owner: root
+#    group: root
+#    mode: '0755'
+#
+#- name: Add Zabbix Agent script
+#  lineinfile:
+#    path: /etc/zabbix/zabbix_agentd.d/user_parameter.conf
+#    create: yes
+#    line: "UserParameter=req_counter[*], bash /etc/zabbix/req_counter.sh"
+#    owner: root
+#    group: zabbix
+#    mode: '0755'
+
+- name: Restart Zabbix Agent
+  systemd:
+    name: zabbix-agent
+    state: restarted
+    enabled: yes

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+<title> SYSTEM INFORMATION }}  </title>
+</head>
+
+<body>
+
+<h1> Hostname  </h1>
+<p style="font-size: 20px;"> Proxy hostname: {{ ansible_facts['hostname'] }} </p>
+
+<h1> CPU  </h1>
+<p style="font-size: 20px;"> CPU Specification: {{ ansible_facts['processor'][2] }} </p>
+
+<h1> IP address  </h1>
+<p style="font-size: 20px;"> Host ip address: {{ ansible_facts['eth0']['ipv4']['address'] }} </p>
+
+</body>
+
+</html>

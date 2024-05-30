@@ -1,0 +1,73 @@
+---
+# tasks file for nginx
+
+
+#- name: install nginx
+#  apt:
+#    name: nginx
+#    state: latest
+#
+#- name: Update apt Cache
+#  apt:
+#    update_cache: yes
+#    force_apt_get: yes
+
+#- name: wait until apt lock is released
+#  shell: lsof -w /var/lib/apt/lists/lock | wc -l
+#  register: lock
+#  until: lock.stdout == "0"
+#  retries: 10
+#  delay: 10
+#
+#- name: wait until apt lock_frontend is released
+#  shell: lsof -w /var/lib/dpkg/lock-frontend | wc -l
+#  register: lock_frontend
+#  until: lock_frontend.stdout == "0"
+#  retries: 10
+#  delay: 10
+
+- name: Install Apt Packages
+  apt:
+    name: "nginx"
+    state: latest
+    force_apt_get: yes
+
+- name: Copy nginx config files
+  copy:
+    src: "{{ item.src }}" 
+    dest: "{{ item.dest }}"
+  loop:
+    - src: nginx.conf
+      dest: /etc/nginx/nginx.conf
+    - src: data
+      dest: /var/www/
+
+- name: Nginx Index file
+  template:
+    src: index.j2
+    dest: '/var/www/html/index.nginx-debian.html'
+    owner: www-data
+    group: www-data
+    mode: '644'
+
+- name: Touch the same file, but add/remove some permissions
+  file:
+    path: /var/log/nginx/access.log
+    state: touch
+    mode: o+r
+
+- name: Add the user 'zabbix' to the group 'adm'
+  ansible.builtin.user:
+    name: zabbix
+    groups: adm
+    append: yes
+
+- name: Stop service nginx, if started
+  service:
+    name: nginx
+    state: stopped
+
+- name: Start nginx, if  stopped
+  service:
+    name: nginx
+    state: started

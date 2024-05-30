@@ -1,0 +1,17 @@
+---
+
+- name: Deploy nginx config, filebaet, docker, zabbix agent
+  remote_user: andy
+  become: true
+  become_user: root
+  hosts: web
+  gather_facts: true
+  roles:
+    - role: nginx
+    - role: zabbix-agent
+    - role: docker_install
+    - role: fb_install
+      vars:
+        fb_container: docker_filebeat
+        fb_config: filebeat
+        fb_config_dir: filebeat

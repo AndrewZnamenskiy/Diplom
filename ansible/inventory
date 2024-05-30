@@ -1,0 +1,15 @@
+[Proxy1]
+192.168.10.10
+
+[Proxy2]
+192.168.11.10
+
+[ZabbixSRV]
+192.168.11.11
+
+[ELK]
+192.168.11.12
+
+[web:children]
+Proxy1
+Proxy2

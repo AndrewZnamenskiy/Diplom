@@ -1,0 +1,30 @@
+---
+# tasks file for fb_install
+
+- name: Create a directory if it doesn't exist
+  file:
+    path: "/media/{{ fb_config_dir }}"
+    state: directory
+    mode: '0755'
+    owner: andy
+    group: docker
+    recurse: true
+
+- name: copy Docker Compose files
+  copy:
+    src: "{{ fb_container }}.yml"
+    dest: /home/andy/docker-compose.yml
+    owner: andy
+    group: docker
+
+- name: copy filebeat config file
+  copy:
+    src: "{{ fb_config }}.yml"
+    dest: "/media/{{ fb_config_dir }}/{{ fb_config }}.yml"
+    owner: andy
+    group: docker
+
+- name: shell command on remote host
+  shell:
+    cmd: "docker-compose -f docker-compose.yml up -d"
+    chdir: /home/andy/
