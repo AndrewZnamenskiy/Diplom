@@ -71,21 +71,21 @@
 
  4. Копируем на машину vm-ansible в домашнюю папку пользователя проект ansible следующего содержания:
 
-    - файл с перечнем хостов: inventory
-    - файл конфигурации ansible: ansible.cfg
-    - файл playbook: ansible_roles_proxy.yml
-    - файл playbook: ansible_roles_elk.yml
-    - файл playbook: ansible_roles_zabbix.yml
-    - роли:
-	* docker_install
-	* elastic_kibana_install
-	* fb_install
-	* nginx
-	* zabbix-agent
-	* zabbix_srv_install
+    * файл с перечнем хостов: inventory
+    * файл конфигурации ansible: ansible.cfg
+    * файл playbook: ansible_roles_proxy.yml
+    * файл playbook: ansible_roles_elk.yml
+    * файл playbook: ansible_roles_zabbix.yml
+    * роли:
+    	 * docker_install
+    	 * elastic_kibana_install
+	 * fb_install
+	 * nginx
+	 * zabbix-agent
+	 * zabbix_srv_install
 
  
- 5. Запускаем playbook поочерёдности: 
+ 5. Запускаем playbook поочерёдно: 
 
     1) Устанавливаем nginx, docker/Compose,filebeat,zabbix agent и соответсвуюшие конфигурации
 
