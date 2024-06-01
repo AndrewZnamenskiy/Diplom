@@ -8,6 +8,7 @@
 * [Фиксация результатов](#Фиксация-результатов-выполнения-пунктов-задания)
     * [Сайт](#Сайт)
     * [Мониторинг](#Мониторинг)
+    * [Логи](#Логи)
     * [Сеть](#Сеть)
     * [Резервное копирование](#Резервное-копирование)
 
@@ -107,42 +108,29 @@
 * Учётные данные для входа в Веб-интерфейс  Zabbix: Admin / zabbix
 * Учётные данные для входа в Веб-интерфейс Kibana : elastic / test
 * Вход на vm-ansible по ssh по ключу (директория privatkey)
+	 * Переход на vm-proxy1: ssh andy@proxy1 
+	 * Переход на vm-proxy2: ssh andy@proxy2
+	 * Переход на vm-ELK: ssh andy@elastic
+	 * Переход на vm-zabbix: ssh andy@zabbix
 
 ### Сайт
 
-![Commit Site](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Sitep1.png)
+
 
 
 ### Мониторинг
 
-![Commit Mon](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Monp1.png)
-
-
-![Commit Mon](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Monp2.png)
-
+### Логи
 
 ### Сеть
 
-![Commit Net](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Netp1.png)
-
-
-![Commit Net](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Netp2.png)
-
-
-![Commit Net](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Netp3.png)
-
-
-![Commit Net](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Netp4.png)
-
-
-![Commit Net](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Netp5.png)
+### Резервное
 
 
 
-### Резервное копирование
+*Две*
 
-![Commit Snap](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Snapp1.png)
+![Commit Site](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Sitep1.png)
 
 
-![Commit Snap](https://github.com/AndrewZnamenskiy/Diplom/blob/main/img/Snapp2.png)
 

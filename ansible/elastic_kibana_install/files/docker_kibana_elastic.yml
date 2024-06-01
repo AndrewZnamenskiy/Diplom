@@ -2,7 +2,8 @@ version: '3.8'
 services:
   elasticsearch:
     container_name: elasticsearch
-    image: elasticsearch:7.17.20
+   # image: elasticsearch:7.17.20
+    image: mirror.gcr.io/elasticsearch:7.17.20
     volumes:
       - /media/elastic/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     environment:
@@ -18,7 +19,8 @@ services:
 
   kibana:
     container_name: kibana
-    image: kibana:7.17.20
+#    image: kibana:7.17.20
+    image: mirror.gcr.io/kibana:7.17.20
     depends_on:
       - elasticsearch
     ulimits:

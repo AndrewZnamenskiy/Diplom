@@ -1,0 +1,36 @@
+---
+- name: Prepare bastion
+  remote_user: andy
+  become: true
+  become_user: root
+  hosts: ansible
+  gather_facts: false
+  tasks:
+    - name: Create a directory if it doesn't exist
+      file:
+        path: "/home/andy/project"
+        state: directory
+        mode: '0755'
+        owner: andy
+        group: andy
+        recurse: true
+
+    - name: copy project
+      copy:
+        src: "/home/andy/github/Diplom/ansible/"
+        dest: "/home/andy/project/"
+        owner: andy
+        group: andy
+
+    - name: copy private key
+      copy:
+        src: "/home/andy/.ssh/id_ed25519"
+        dest: "/home/andy/.ssh/id_ed25519"
+        owner: andy
+        group: andy
+        mode: '0600'
+
+    - name: Install Ansible
+      apt:
+        name: ansible
+        state: present
