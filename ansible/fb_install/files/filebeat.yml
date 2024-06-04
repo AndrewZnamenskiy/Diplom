@@ -15,7 +15,7 @@ filebeat.inputs:
 output.elasticsearch:
   # Array of hosts to connect to.
   #hosts: ["elastic:9200"]
-  hosts: ["192.168.11.12:9200"]
+  hosts: ["192.168.101.203:9200"]
   protocol: "http"
   username: "elastic"
   password: "test"
@@ -31,7 +31,13 @@ output.elasticsearch:
         message: "INFO"
     - index: "%{[fields.log_type]}-%{[agent.version]}-%{+yyyy.MM.dd}"
 
+processors:
+  - drop_event:
+      when:
+        regexp:
+          message: "Envoy/HC"
+
 setup.kibana:
-  host: "http://192.168.11.12:5601"
+  host: "http://192.168.101.203:5601"
   username: "elastic"
   password: "test"

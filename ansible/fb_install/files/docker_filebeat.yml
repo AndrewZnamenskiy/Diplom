@@ -4,6 +4,7 @@ services:
     container_name: filebeat
     #image: elastic/filebeat:7.17.20
     image: public.ecr.aws/elastic/filebeat:7.17.20
+    restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/host_docker/docker.sock
       - /var/lib/docker:/host_docker/var/lib/docker

@@ -4,6 +4,7 @@ services:
     container_name: elasticsearch
    # image: elasticsearch:7.17.20
     image: mirror.gcr.io/elasticsearch:7.17.20
+    restart: unless-stopped
     volumes:
       - /media/elastic/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     environment:
@@ -21,6 +22,7 @@ services:
     container_name: kibana
 #    image: kibana:7.17.20
     image: mirror.gcr.io/kibana:7.17.20
+    restart: unless-stopped
     depends_on:
       - elasticsearch
     ulimits:
